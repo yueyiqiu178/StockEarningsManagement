@@ -34,7 +34,7 @@ export default {
       <li><a href="#" @click="clickTradeType('buy')" >買進</a></li>
       <li><a href="#" @click="clickTradeType('sell')">賣出</a></li>
     </ul>
-</div>
+ </div>
 
 </div>
 
