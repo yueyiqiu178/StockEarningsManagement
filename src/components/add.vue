@@ -1,5 +1,6 @@
 <script type="javascript">
 import Datepicker from 'vuejs-datepicker'
+import axios from 'axios'
 export default {
     components : {Datepicker},
     data : function(){
@@ -7,11 +8,12 @@ export default {
         tradeTypeVariant : "primary",
         tradeType : "",
         tradeTypeText : "請選擇",
-        tradePrice : 0,
+        tradePrice : "",
         tradeDate : "",
         stockId : "",
-        tradeQty : 0,
-
+        tradeQty : "",
+        errorText : "",
+        isErrorShow : false,
       } ;
     },
     mounted : function(){
@@ -30,6 +32,21 @@ export default {
             this.tradeType = type;
         },
         submitTrade : function(){
+
+          //var isPassed = true;
+
+
+          axios.post('api/hellopost', {
+                    name: "this.name",
+                    description: "this.description"
+                })
+                .then(function (response) {
+                    window.console.log(response.data);
+                })
+                .catch(function (error) {
+                    window.console.log(error);
+                    //currentObj.output = error;
+                });          
 
         },
         abc(){
@@ -73,27 +90,27 @@ export default {
         label-cols-sm="3"
         label="股票代號:"
         label-align-sm="right"
-        label-for="nested-city"
+        label-for="stockId"
       >
-        <b-form-input id="nested-city"></b-form-input>
+        <b-form-input id="stockId" :value="stockId" ></b-form-input>
       </b-form-group>      
 
       <b-form-group
         label-cols-sm="3"
         label="價格:"
         label-align-sm="right"
-        label-for="nested-city"
+        label-for="tradePrice"
       >
-        <b-form-input id="nested-city"></b-form-input>
+        <b-form-input id="tradePrice" :value="tradePrice" ></b-form-input>
       </b-form-group>
 
       <b-form-group
         label-cols-sm="3"
         label="數量:"
         label-align-sm="right"
-        label-for="nested-city"
+        label-for="tradeQty"
       >
-        <b-form-input id="nested-city"></b-form-input>
+        <b-form-input id="tradeQty" :value="tradeQty"></b-form-input>
       </b-form-group>
 
       <b-form-group
@@ -102,16 +119,17 @@ export default {
         label-align-sm="right"
         label-for="nested-state"
       >
-        <datepicker format="yyyy/MM/dd" :value="tradeDate"></datepicker>
+        <datepicker format="yyyy/MM/dd" input-class="form-control" :value="tradeDate"></datepicker>
       </b-form-group>
 
       <b-form-group
         label-cols-sm="3"
-        label="Country:"
+        label=""
         label-align-sm="right"
         label-for="nested-country"
       >
-        <b-form-input id="nested-country"></b-form-input>
+        <b-alert :show="isErrorShow"  variant="danger">{{errorText}}</b-alert>
+        
       </b-form-group>
 
       <b-form-group
